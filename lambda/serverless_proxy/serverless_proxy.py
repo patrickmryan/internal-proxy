@@ -4,7 +4,7 @@ import os
 import urllib3
 
 
-def handler(event, context):
+def lambda_handler(event, context):
     print(json.dumps(event))
 
     url = os.environ["PROXY_URL"]
