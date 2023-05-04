@@ -22,15 +22,11 @@ def lambda_handler(event, context):
         headers = event["headers"]
 
     # Important to remove the Host header before forwarding the request
-    if headers.get("Host"):
-        headers.pop("Host")
+    for key in ["Host", "host"]:
+        if key in headers:
+            headers.pop(key)
 
-    if headers.get("host"):
-        headers.pop("host")
-
-    body = ""
-    if event.get("body"):
-        body = event["body"]
+    body = event.get("body") or ""
 
     auth_headers = urllib3.make_headers(basic_auth=f"{proxy_username}:{proxy_password}")
 
